@@ -1,0 +1,15 @@
+[Unit]
+Description=OpenBTS
+Wants=network.target
+After=network.target asterisk.service smqueue.service sipauthserve.service
+
+[Service]
+Type=simple
+ExecStartPre=/OpenBTS/systemd/pre-start-openbts.sh
+ExecStart=/OpenBTS/OpenBTS
+ExecStopPost=/usr/bin/killall transceiver
+WorkingDirectory=/OpenBTS
+PIDFile=/var/run//OpenBTS.pid
+
+[Install]
+WantedBy=multi-user.target

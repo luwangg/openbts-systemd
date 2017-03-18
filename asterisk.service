@@ -1,0 +1,15 @@
+[Unit]
+Description=Asterisk PBX and telephony daemon
+Documentation=man:asterisk(8)
+Wants=network.target
+After=network.target smqueue.service sipauthserve.service
+
+[Service]
+Type=forking
+PIDFile=/var/run/asterisk/asterisk.pid
+ExecStartPre=/OpenBTS/systemd/pre-start-asterisk.sh
+ExecStart=/usr/sbin/asterisk -U asterisk -G www-data -F
+ExecStopPost=/OpenBTS/systemd/post-stop-asterisk.service
+
+[Install]
+WantedBy=multi-user.target
